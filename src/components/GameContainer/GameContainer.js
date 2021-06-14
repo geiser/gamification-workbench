@@ -8,28 +8,14 @@ export default class GameContainer extends React.Component {
         return (
             <Container maxWidth={false} className="game-container">
                 <Box className="game-container-box">
-                    <PlayerStats
-                        correctAnswers={this.props.data.correctAnswers}
-                        points={this.props.data.points}
-                    />
+                    <PlayerStats />
 
-                    <Ranking
-                        points={this.props.data.points}
-                        userName={this.props.data.userName}
-                        avatar={this.props.data.avatar}
-                        themeName={this.props.themeName}
-                    />
+                    <Ranking />
                 </Box>
 
-                <Quiz
-                    setAvatar={this.props.setAvatar}
-                    updatePoints={this.props.updatePoints}
-                    themeName={this.props.themeName}
-                />
+                <Quiz />
                 
-                <Trophies
-                    trophies={this.props.data.trophies}
-                />
+                <Trophies />
             </Container>
         );
     }

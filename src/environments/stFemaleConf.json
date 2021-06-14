@@ -1,0 +1,9 @@
+{
+    "preTest": "#sessionId={sessionId}&points={points}",
+    "postTest": "#sessionId={sessionId}&points={points}",
+
+    "theme": {
+        "primary": "purple",
+        "secondary": "purple"
+    }
+}

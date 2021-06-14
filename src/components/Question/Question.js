@@ -1,17 +1,19 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { AnswerOptions } from "../";
-import { localization, questions } from "../../config.json";
+import Context from "../../contexts/Context";
 import "./Question.css";
 
 export default class Question extends React.Component {
+    static contextType = Context;
+
     constructor(props) {
         super(props);
 
-        this.questions = questions;
-
         this.state = {
-            currentQuestion: this.questions[0],
+            ready: false,
+            currentQuestion: null,
+            questions: [],
             questionIndex: 0,
             showMessage: null,
             text: null,
@@ -25,26 +27,51 @@ export default class Question extends React.Component {
         this.nextQuestion = this.nextQuestion.bind(this);
     }
 
+    componentDidMount() {
+        let env = this.context.environment;
+
+        this.setState({
+            ready: true,
+            currentQuestion: env.questions[0],
+            questions: env.questions,
+        });
+    }
+
     // alias
     get currentQuestion() {
         return this.state.currentQuestion;
     }
 
+    // alias
+    get questions() {
+        return this.state.questions;
+    }
+
+    // alias
+    get player() {
+        return this.context.getPlayer();
+    }
+
     checkAnswer(answer) {
         if (!this.valid)
             return;
+
+        this.props.onAnswer({
+            questionId: this.currentQuestion.id,
+            answer: answer,
+        });
         
         clearTimeout(this.feedbackTimeout);
         
         // right
         if (answer === this.currentQuestion.rightAnswer) {
-            this.props.updatePoints(10);
+            this.player.updatePoints(10);
             // new Audio('./assets/default/audio/right.mp3').play();
             this.setState({ showMessage: "right" });
         }
         // wrong
         else {
-            this.props.updatePoints(-5);
+            this.player.updatePoints(-5);
             // new Audio('./assets/default/audio/wrong.mp3').play();
             this.setState({ showMessage: "wrong" });
         }
@@ -78,26 +105,37 @@ export default class Question extends React.Component {
             background: this.state.showMessage === "right" ? "#238823" : "#d2222d",
         };
 
+        let localization = this.context.environment.localization;
+
         return (
             <>
-                <Box className="question-box">
-                    <Box className="question">
-                        <Typography variant="h6">Questão {this.state.questionIndex + 1}/{this.questions.length}</Typography>
+            {
+                !this.state.ready
+                ? ( <Box className="loader center" style={{borderTopColor: "#fff"}}></Box> )
+                :
+                (
+                    <>
+                        <Box className="question-box">
+                            <Box className="question">
+                                <Typography variant="h6">Questão {this.state.questionIndex + 1}/{this.questions.length}</Typography>
 
-                        {this.currentQuestion.text}
-                        
-                        <img src={this.currentQuestion.image} alt="" />
-                    </Box>
+                                {this.currentQuestion.text}
+                                
+                                <img src={this.currentQuestion.image} alt="" />
+                            </Box>
 
-                    <AnswerOptions
-                        answers={this.currentQuestion.answers}
-                        onAnswer={this.checkAnswer}
-                    />
-                </Box>
+                            <AnswerOptions
+                                answers={this.currentQuestion.answers}
+                                onAnswer={this.checkAnswer}
+                            />
+                        </Box>
 
-                <div className="question-box feedback" style={feedbackStyle}>
-                    {this.state.showMessage === "right" ? localization.rightAnswer : localization.wrongAnswer}
-                </div>
+                        <div className="question-box feedback" style={feedbackStyle}>
+                            {this.state.showMessage === "right" ? localization.rightAnswer : localization.wrongAnswer}
+                        </div>
+                    </>
+                )
+            }
             </>
         )
     }

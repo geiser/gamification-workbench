@@ -1,27 +1,64 @@
 import React from "react";
 import { Box } from "@material-ui/core";
-import { Player, Header, GameContainer } from "../";
-import { localization, trophies } from "../../config.json";
+import { Player, Header, GameContainer, Loading } from "../";
+import Context from "../../contexts/Context";
 
 export default class Game extends React.Component {
+    static contextType = Context;
+
     constructor(props) {
         super(props);
-
-        this.state = {
-            userName: "Alex",
-            avatar: "./assets/" + props.themeName + "/images/avatar1.png",
-            points: 0,
-            correctAnswers: 0,
-            level: 0,
-            question: null,
-            trophies: [],
-        };
-
-        this.state.trophies = trophies.map(trophy => Object.assign(trophy, { unlocked: false }));
-
+        
+        this.getPlayer = this.getPlayer.bind(this);
         this.setAvatar = this.setAvatar.bind(this);
         this.updatePoints = this.updatePoints.bind(this);
         this.updateTrophies = this.updateTrophies.bind(this);
+        this.updateCollectedData = this.updateCollectedData.bind(this);
+        this.updateQuestions = this.updateQuestions.bind(this);
+
+        this.state = {
+            ready: false,
+            username: "Alex",
+            avatar: "./assets/default/images/avatar.svg",
+            testType: null,
+            points: 0,
+            correctAnswers: 0,
+            level: 0,
+            questions: [],
+            trophies: [],
+            collectedData: [],
+
+            setAvatar: this.setAvatar,
+            updatePoints: this.updatePoints,
+            updateTrophies: this.updateTrophies,
+            updateCollectedData: this.updateCollectedData,
+            updateQuestions: this.updateQuestions,
+        };
+
+        /*
+        // adds a getter called "player"
+        Object.defineProperty(this, "player", {
+            get: function() { return this.state }.bind(this),
+        });
+        */
+    }
+
+    getPlayer() {
+        return this.state;
+    }
+
+    componentDidMount() {
+        let env = this.context.environment;
+
+        this.setState({
+            testType: env.name,
+            avatar: env.avatarList[0],
+            trophies: env.trophies.map(trophy => Object.assign(trophy, { unlocked: false }))
+        }, () => {
+            this.context.setPlayer(this.getPlayer, () => {
+                this.setState({ ready: true });
+            });
+        });
     }
 
     setAvatar(avatar) {
@@ -51,6 +88,7 @@ export default class Game extends React.Component {
                 && !trophyList[id].unlocked
             ) {
                 trophyList[id].unlocked = true;
+                trophyList[id].timestamp = +Date.now();
 
                 this.setState({
                     trophies: Object.values(trophyList),
@@ -59,29 +97,40 @@ export default class Game extends React.Component {
         }
     }
 
-    onMouseMove(...args) {
-        // onMouseMove={this.onMouseMove.bind(this)}
-        // console.dir(...args);
+    updateCollectedData() {
+        // TO DO
+    }
+
+    updateQuestions({ questionId, answer }) {
+        // TO DO
     }
 
     render() {
+        let env = this.context.environment;
+
         return (
             <Box className="game">
-                {/* Header */}
-                <Header title={localization.title}>
-                    <Player
-                        userName={this.state.userName}
-                        avatar={this.state.avatar}
-                    />
-                </Header>
+                {!this.state.ready
+                ? ( <Loading />)
+                : (
+                    <>
+                        {/* Header */}
+                        <Header title={env.localization.title}>
+                            <Player
+                                username={this.state.username}
+                                avatar={this.state.avatar}
+                            />
+                        </Header>
 
-                {/* Game */}
-                <GameContainer
-                    themeName={this.props.themeName}
-                    setAvatar={this.setAvatar}
-                    updatePoints={this.updatePoints}
-                    data={this.state}
-                />
+                        {/* Game */}
+                        <GameContainer
+                            setAvatar={this.context.getPlayer().setAvatar}
+                            updatePoints={this.updatePoints}
+                            data={this.state}
+                        />
+                    </>
+                )
+            }
             </Box>
         );
     }

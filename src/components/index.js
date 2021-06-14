@@ -6,6 +6,8 @@ export { default as AvatarSelection} from "./AvatarSelection/AvatarSelection.js"
 
 export { default as Header } from "./Header/Header.js";
 
+export { default as Loading } from "./Loading/Loading.js";
+
 export { default as Game } from "./Game/Game.js";
 
 export { default as GameContainer } from "./GameContainer/GameContainer.js";

@@ -1,10 +1,15 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { localization } from "../../config.json";
 import "./PlayerStats.css";
+import Context from "../../contexts/Context";
 
 export default class PlayerStats extends React.Component {
+    static contextType = Context;
+
     render() {
+        let { localization } = this.context.environment;
+        let player = this.context.getPlayer();
+
         return (
             <Box className="game-box game-box-stats">
                 <Box className="game-box game-box-stats-item">
@@ -12,7 +17,7 @@ export default class PlayerStats extends React.Component {
                         {localization.points}
                     </Typography>
                     <Typography variant="h4" style={{textAlign: "center"}}>
-                        {this.props.points}
+                        {player.points}
                     </Typography>
                 </Box>
 
@@ -21,7 +26,7 @@ export default class PlayerStats extends React.Component {
                         {localization.rightAnswers}
                     </Typography>
                     <Typography variant="h4" style={{textAlign: "center"}}>
-                        {this.props.correctAnswers}
+                        {player.correctAnswers}
                     </Typography>
                 </Box>
             </Box>

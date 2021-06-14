@@ -1,26 +1,40 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { AvatarSelection, Question } from "../";
-import { localization, avatarList } from "../../config.json";
+import { AvatarSelection, Loading, Question } from "../";
+import Context from "../../contexts/Context";
 import "./Quiz.css";
 
 export default class Quiz extends React.Component {
+    static contextType = Context;
+
     constructor(props) {
         super(props);
 
         this.state = {
-            headerText: localization.avatarSelection.header,
-            textContent: localization.avatarSelection.text,
+            ready: false,
+            headerText: null,
+            textContent: null,
             onQuiz: false,
+            avatarList: [],
         };
-        
-        this.avatarList = avatarList[props.themeName];
+    
 
         this.changeHeader = this.changeHeader.bind(this);
         this.changeText = this.changeText.bind(this);
         this.startQuiz = this.startQuiz.bind(this);
         this.onAnswer = this.onAnswer.bind(this);
         this.onFinish = this.onFinish.bind(this);
+    }
+
+    componentDidMount() {
+        let env = this.context.environment;
+
+        this.setState({
+            ready: true,
+            headerText: env.localization.avatarSelection.header,
+            textContent: env.localization.avatarSelection.text,
+            avatarList: env.avatarList,
+        });
     }
 
     changeHeader(headerText) {
@@ -32,6 +46,8 @@ export default class Quiz extends React.Component {
     }
 
     startQuiz() {
+        let localization = this.context.environment.localization;
+
         this.setState({
             onQuiz: true,
             headerText: localization.quiz.header,
@@ -40,7 +56,7 @@ export default class Quiz extends React.Component {
     }
 
     onAnswer({ questionId, answer }) {
-        console.dir({ questionId, answer })
+        console.dir({ questionId, answer });
     }
 
     onFinish() {
@@ -48,29 +64,33 @@ export default class Quiz extends React.Component {
     }
 
     render() {
+        let player = this.context.getPlayer();
+
         return (
             <Box className="quiz-box">
                 <Typography variant="h5" className="text-header">{this.state.headerText}</Typography>
                 <Typography variant="h6" className="text-content">{this.state.textContent}</Typography>
 
-                {!this.state.onQuiz
-                ? 
-                    (
+                {!this.state.ready
+                ? ( <Loading /> )
+                : 
+                (
+                    !this.state.onQuiz
+                    ? (
                         <AvatarSelection
-                            setAvatar={this.props.setAvatar}
-                            avatars={this.avatarList}
+                            setAvatar={player.setAvatar}
+                            avatars={this.state.avatarList}
                             onClickNext={this.startQuiz}
                         />
                     )
-                : // else
+                    :
                     (
                         <Question
-                            updatePoints={this.props.updatePoints}
                             onAnswer={this.onAnswer}
                             onFinish={this.onFinish}
                         />
                     )
-                }
+                )}
             </Box>
         );
     }
