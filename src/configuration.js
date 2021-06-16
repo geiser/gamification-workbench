@@ -1,10 +1,6 @@
 import { default as config } from "./config.json";
 
 export default class Config {
-    static raw() {
-        return config;
-    }
-
     static getVar(key) {
         return config[key];
     }
@@ -48,7 +44,10 @@ export default class Config {
         let defaultEnv = await this.getDefaultEnvironment();
 
         // merge with default
-        env = Object.assign({}, defaultEnv, env, { name: envName });
+        env = Object.assign({}, defaultEnv, env, {
+            name: envName,
+            file: config.environments[envName],
+        });
 
         // merge localization
         Object.assign(env.localization, defaultEnv.localization);

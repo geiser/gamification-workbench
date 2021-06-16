@@ -18,8 +18,8 @@
         }
     },
 
-    "preTest": "#sessionId={sessionId}&points={points}",
-    "postTest": "#sessionId={sessionId}&points={points}",
+    "preTest": "#sessionId={{sessionId}}&points={{points}}",
+    "postTest": "#sessionId={{sessionId}}&points={{points}}",
 
     "theme": {
         "primary": "green",

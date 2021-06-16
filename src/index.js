@@ -1,14 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { createSession, validateSession } from "./scripts";
+//import { default as config } from  "./configuration";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+(function() {
+    const storage = window.localStorage;
+
+    Promise.resolve()
+        .then(validateSession)
+            .catch(createSession)
+        .then(() => console.table(storage))
+        .finally(renderWebpage)
+    ;
+
+    function renderWebpage() {
+        ReactDOM.render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>,
+            document.getElementById('root')
+        );
+    }
+})();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

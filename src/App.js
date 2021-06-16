@@ -4,18 +4,16 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import * as colors from "@material-ui/core/colors";
 import './App.css';
 
+import { storage, getSessionId, selectEnvironment, wasAlreadyRedirectedToPretest } from "./scripts";
 import { default as config } from  "./configuration";
 import Context from "./contexts/Context";
-
-function rand(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-}
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
+            ready: false,
             environment: null,
             errorMessage: null,
 
@@ -24,35 +22,51 @@ export default class App extends React.Component {
         };
 
         this.theme = null;
+        this.sendUserToPretest = false;
+
+        this.setReady = this.setReady.bind(this);
+        this.mountErrorScreen = this.mountErrorScreen.bind(this);
     }
 
     componentDidMount() {
-    	let participantAllocation = config.getVar("participantAllocation");
-    	let environment;
-
-    	if (participantAllocation === "random") {
-    		environment = rand(config.getEnvironments());
-    	} else if (!isNaN(participantAllocation)) {
-    		/*
-    		// TO DO
-    		let envList = config.getEnvironments();
-			environment = envList[getParticipantNumberSomehow() % participantAllocation] % envList.length;
-    		*/
-    	} else {
-            this.setState({
-                errorMessage: "invalid configuration: \"participantAllocation\"",
-            });
-        }
-
-        config.getEnvironment(environment)
+        selectEnvironment()
+        .then(envName => config.getEnvironment(envName))
         .then(environment => {
-            this.theme = this.defineTheme(environment.theme);
+            // Se 'environmentName' não estiver definido, é porque a sessão é inválida ou é a primeira vez que o usuário acessa a página
+            // eslint-disable-next-line
+            if (storage.getItem("environmentName") == undefined && !wasAlreadyRedirectedToPretest()) {
+                storage.setItem("environmentName", environment.name);
+                storage.setItem("redirectedToPretest", true);
 
-            this.setState({ environment });
+                if (environment.preTest) {
+                    window.location = environment.preTest
+                        .replace(/\{\{sessionId\}\}/g, getSessionId())
+                        .replace(/\{\{points\}\}/g, 0) // ??????
+                    ;
+
+                    return;
+                } else {
+                    console.warn(`Pretest for "${environment.name}" is not defined in "${environment.file}"`);
+                }
+            }
+
+            console.table(storage);
+
+            this.theme = this.defineTheme(environment.theme);
+            this.setState({ environment }, this.setReady);
         })
-        .catch(e => {
-            this.setState({ errorMessage: e.message });
-        });
+        .catch(this.mountErrorScreen);
+    }
+
+    setReady() {
+        this.setState({ ready: true });
+    }
+
+    mountErrorScreen(message) {
+        if (typeof message === "object")
+            message = message.message || message.errorMessage;
+        
+        this.setState({ errorMessage: message });
     }
 
     defineTheme(theme) {
@@ -70,7 +84,7 @@ export default class App extends React.Component {
         }
 
         // waiting for environment
-        if (!this.state.environment) {
+        if (!this.state.ready) {
             return ( <Loading fullscreen={true} /> );
         }
 

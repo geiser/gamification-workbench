@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { AvatarSelection, Loading, Question } from "../";
+import { getSessionId } from "../../scripts";
 import Context from "../../contexts/Context";
 import "./Quiz.css";
 
@@ -17,7 +18,6 @@ export default class Quiz extends React.Component {
             onQuiz: false,
             avatarList: [],
         };
-    
 
         this.changeHeader = this.changeHeader.bind(this);
         this.changeText = this.changeText.bind(this);
@@ -56,11 +56,22 @@ export default class Quiz extends React.Component {
     }
 
     onAnswer({ questionId, answer }) {
+        // TO DO
         console.dir({ questionId, answer });
     }
 
     onFinish() {
+        // TO DO: Send data to server
+        let env = this.context.environment;
 
+        if (env.postTest) {
+            window.location = env.postTest
+                .replace(/\{\{sessionId\}\}/g, getSessionId())
+                .replace(/\{\{points\}\}/g, this.context.getPlayer().points)
+            ;
+        } else {
+            console.warn(`Posttest for "${env.name}" is not defined in "${env.file}"`);
+        }
     }
 
     render() {
