@@ -100,6 +100,10 @@ export default class Question extends React.Component {
     }
 
     render() {
+        if (!this.state.ready) {
+            return ( <Box className="loader center" style={{borderTopColor: "#fff"}}></Box> );
+        }
+
         let feedbackStyle = {
             display: !!this.state.showMessage ? "block" : "none",
             background: this.state.showMessage === "right" ? "#238823" : "#d2222d",
@@ -109,34 +113,27 @@ export default class Question extends React.Component {
 
         return (
             <>
-            {
-                !this.state.ready
-                ? ( <Box className="loader center" style={{borderTopColor: "#fff"}}></Box> )
-                :
-                (
-                    <>
-                        <Box className="question-box">
-                            <Box className="question">
-                                <Typography variant="h6">Questão {this.state.questionIndex + 1}/{this.questions.length}</Typography>
+                <Box className="question-box">
+                    <Box className="question">
+                        <Typography variant="h6">
+                            Questão {this.state.questionIndex + 1}/{this.questions.length}
+                        </Typography>
 
-                                {this.currentQuestion.text}
+                        {this.currentQuestion.text}
                                 
-                                <img src={this.currentQuestion.image} alt="" />
-                            </Box>
+                        <img src={this.currentQuestion.image} alt="" />
+                    </Box>
 
-                            <AnswerOptions
-                                answers={this.currentQuestion.answers}
-                                onAnswer={this.checkAnswer}
-                            />
-                        </Box>
+                    <AnswerOptions
+                        answers={this.currentQuestion.answers}
+                        onAnswer={this.checkAnswer}
+                    />
+                </Box>
 
-                        <div className="question-box feedback" style={feedbackStyle}>
-                            {this.state.showMessage === "right" ? localization.rightAnswer : localization.wrongAnswer}
-                        </div>
-                    </>
-                )
-            }
+                <div className="question-box feedback" style={feedbackStyle}>
+                    {this.state.showMessage === "right" ? localization.rightAnswer : localization.wrongAnswer}
+                </div>
             </>
-        )
+        );
     }
 }

@@ -4,6 +4,8 @@ export { default as Avatar} from "./Avatar/Avatar.js";
 
 export { default as AvatarSelection} from "./AvatarSelection/AvatarSelection.js";
 
+export { default as ErrorScreen} from "./ErrorScreen/ErrorScreen.js";
+
 export { default as Header } from "./Header/Header.js";
 
 export { default as Loading } from "./Loading/Loading.js";

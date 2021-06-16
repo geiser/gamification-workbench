@@ -65,32 +65,37 @@ export default class Quiz extends React.Component {
 
     render() {
         let player = this.context.getPlayer();
+        let content;
+
+        if (!this.state.ready) {
+            content = ( <Loading /> );
+        } else if (!this.state.onQuiz) {
+            content = (
+                <AvatarSelection
+                    setAvatar={player.setAvatar}
+                    avatars={this.state.avatarList}
+                    onClickNext={this.startQuiz}
+                />
+            );
+        } else {
+            content = (
+                <Question
+                    onAnswer={this.onAnswer}
+                    onFinish={this.onFinish}
+                />
+            );
+        }
 
         return (
             <Box className="quiz-box">
-                <Typography variant="h5" className="text-header">{this.state.headerText}</Typography>
-                <Typography variant="h6" className="text-content">{this.state.textContent}</Typography>
+                <Typography variant="h5" className="text-header">
+                    {this.state.headerText}
+                </Typography>
+                <Typography variant="h6" className="text-content">
+                    {this.state.textContent}
+                </Typography>
 
-                {!this.state.ready
-                ? ( <Loading /> )
-                : 
-                (
-                    !this.state.onQuiz
-                    ? (
-                        <AvatarSelection
-                            setAvatar={player.setAvatar}
-                            avatars={this.state.avatarList}
-                            onClickNext={this.startQuiz}
-                        />
-                    )
-                    :
-                    (
-                        <Question
-                            onAnswer={this.onAnswer}
-                            onFinish={this.onFinish}
-                        />
-                    )
-                )}
+                {content}
             </Box>
         );
     }

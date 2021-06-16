@@ -10,7 +10,9 @@ export default class Trophies extends React.Component {
     render() {
         return (
             <Box className="trophies-container">
-                <Typography variant="h5">{this.context.environment.localization.myTrophies}</Typography>
+                <Typography variant="h5">
+                    {this.context.environment.localization.myTrophies}
+                </Typography>
 
                 <Box className="trophies-list">
                     {

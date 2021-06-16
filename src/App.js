@@ -1,5 +1,5 @@
 import React from "react";
-import { Game, Loading } from "./components";
+import { ErrorScreen, Game, Loading } from "./components";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import * as colors from "@material-ui/core/colors";
 import './App.css';
@@ -65,28 +65,21 @@ export default class App extends React.Component {
     }
 
     render() {
+        if (this.state.errorMessage) {
+            return ( <ErrorScreen message={this.state.errorMessage} /> );
+        }
+
+        // waiting for environment
+        if (!this.state.environment) {
+            return ( <Loading fullscreen={true} /> );
+        }
+
         return (
-            <>
-                {!!this.state.environment && !this.state.errorMessage
-                    ? // if
-                    (
-                        <Context.Provider value={this.state}>
-                            <MuiThemeProvider theme={this.theme}>
-                                <Game />
-                            </MuiThemeProvider>
-                        </Context.Provider>
-                    )
-                    : // else
-                    (
-                        <div className="dim-screen">
-                            {!!this.state.errorMessage
-                                ? ( <h1 className="error center">{this.state.errorMessage}</h1> ) // error screen
-                                : ( <Loading /> ) // loading screen
-                            }
-                        </div>
-                    )
-                }
-            </>
+            <Context.Provider value={this.state}>
+                <MuiThemeProvider theme={this.theme}>
+                    <Game />
+                </MuiThemeProvider>
+            </Context.Provider>
         );
     }
 }

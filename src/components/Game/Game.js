@@ -108,29 +108,26 @@ export default class Game extends React.Component {
     render() {
         let env = this.context.environment;
 
+        if (!this.state.ready) {
+            return ( <Loading fullscreen={true} /> );
+        }
+
         return (
             <Box className="game">
-                {!this.state.ready
-                ? ( <Loading />)
-                : (
-                    <>
-                        {/* Header */}
-                        <Header title={env.localization.title}>
-                            <Player
-                                username={this.state.username}
-                                avatar={this.state.avatar}
-                            />
-                        </Header>
+                {/* Header */}
+                <Header title={env.localization.title}>
+                    <Player
+                        username={this.state.username}
+                        avatar={this.state.avatar}
+                    />
+                </Header>
 
-                        {/* Game */}
-                        <GameContainer
-                            setAvatar={this.context.getPlayer().setAvatar}
-                            updatePoints={this.updatePoints}
-                            data={this.state}
-                        />
-                    </>
-                )
-            }
+                {/* Game */}
+                <GameContainer
+                    setAvatar={this.context.getPlayer().setAvatar}
+                    updatePoints={this.updatePoints}
+                    data={this.state}
+                />
             </Box>
         );
     }
