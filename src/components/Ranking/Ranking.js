@@ -1,23 +1,21 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { RankingPlayer } from "../";
-import { localization, ranking } from "../../config.json";
 import "./Ranking.css";
+import Context from "../../contexts/Context";
 
 export default class Ranking extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.ranking = ranking[props.themeName].map(p => Object.assign(p, {
-            avatar: p.avatar.replace(/\{theme\}/g, props.themeName)
-        }));
-    }
+    static contextType = Context;
 
     render() {
-        let players = [...this.ranking, {
-            name: this.props.userName,
-            avatar: this.props.avatar,
-            points: this.props.points,
+        let { ranking, localization } = this.context.environment;
+
+        let player = this.context.getPlayer();
+        
+        let players = [...ranking, {
+            name: player.username,
+            avatar: player.avatar,
+            points: player.points,
         }]
         .sort((a, b) => b.points - a.points)
         .map((player, i) => (

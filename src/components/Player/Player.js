@@ -6,7 +6,7 @@ export default class Player extends React.Component {
     render() {
         return (
             <Typography variant="h6" className="player">
-                {this.props.userName}
+                {this.props.username}
                 <Avatar
                     avatar={this.props.avatar}
                 />

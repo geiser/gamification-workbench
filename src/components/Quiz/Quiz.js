@@ -1,26 +1,40 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { AvatarSelection, Question } from "../";
-import { localization, avatarList } from "../../config.json";
+import { AvatarSelection, Loading, Question } from "../";
+import { getSessionId } from "../../scripts";
+import Context from "../../contexts/Context";
 import "./Quiz.css";
 
 export default class Quiz extends React.Component {
+    static contextType = Context;
+
     constructor(props) {
         super(props);
 
         this.state = {
-            headerText: localization.avatarSelection.header,
-            textContent: localization.avatarSelection.text,
+            ready: false,
+            headerText: null,
+            textContent: null,
             onQuiz: false,
+            avatarList: [],
         };
-        
-        this.avatarList = avatarList[props.themeName];
 
         this.changeHeader = this.changeHeader.bind(this);
         this.changeText = this.changeText.bind(this);
         this.startQuiz = this.startQuiz.bind(this);
         this.onAnswer = this.onAnswer.bind(this);
         this.onFinish = this.onFinish.bind(this);
+    }
+
+    componentDidMount() {
+        let env = this.context.environment;
+
+        this.setState({
+            ready: true,
+            headerText: env.localization.avatarSelection.header,
+            textContent: env.localization.avatarSelection.text,
+            avatarList: env.avatarList,
+        });
     }
 
     changeHeader(headerText) {
@@ -32,6 +46,8 @@ export default class Quiz extends React.Component {
     }
 
     startQuiz() {
+        let localization = this.context.environment.localization;
+
         this.setState({
             onQuiz: true,
             headerText: localization.quiz.header,
@@ -40,37 +56,57 @@ export default class Quiz extends React.Component {
     }
 
     onAnswer({ questionId, answer }) {
-        console.dir({ questionId, answer })
+        // TO DO
+        console.dir({ questionId, answer });
     }
 
     onFinish() {
+        // TO DO: Send data to server
+        let env = this.context.environment;
 
+        if (env.postTest) {
+            window.location = env.postTest
+                .replace(/\{\{sessionId\}\}/g, getSessionId())
+                .replace(/\{\{points\}\}/g, this.context.getPlayer().points)
+            ;
+        } else {
+            console.warn(`Posttest for "${env.name}" is not defined in "${env.file}"`);
+        }
     }
 
     render() {
+        let player = this.context.getPlayer();
+        let content;
+
+        if (!this.state.ready) {
+            content = ( <Loading /> );
+        } else if (!this.state.onQuiz) {
+            content = (
+                <AvatarSelection
+                    setAvatar={player.setAvatar}
+                    avatars={this.state.avatarList}
+                    onClickNext={this.startQuiz}
+                />
+            );
+        } else {
+            content = (
+                <Question
+                    onAnswer={this.onAnswer}
+                    onFinish={this.onFinish}
+                />
+            );
+        }
+
         return (
             <Box className="quiz-box">
-                <Typography variant="h5" className="text-header">{this.state.headerText}</Typography>
-                <Typography variant="h6" className="text-content">{this.state.textContent}</Typography>
+                <Typography variant="h5" className="text-header">
+                    {this.state.headerText}
+                </Typography>
+                <Typography variant="h6" className="text-content">
+                    {this.state.textContent}
+                </Typography>
 
-                {!this.state.onQuiz
-                ? 
-                    (
-                        <AvatarSelection
-                            setAvatar={this.props.setAvatar}
-                            avatars={this.avatarList}
-                            onClickNext={this.startQuiz}
-                        />
-                    )
-                : // else
-                    (
-                        <Question
-                            updatePoints={this.props.updatePoints}
-                            onAnswer={this.onAnswer}
-                            onFinish={this.onFinish}
-                        />
-                    )
-                }
+                {content}
             </Box>
         );
     }
