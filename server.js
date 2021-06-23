@@ -1,11 +1,13 @@
-var express = require('express');
-var app = express();
-var fs = require('fs')
-var uuid = require('uuid');
+const express = require('express');
+const app = express();
+const fs = require('fs')
+const uuid = require('uuid');
+const path = require('path');
 require("dotenv").config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/", express.static(path.join(__dirname, "./build")));
 
 app.post("/api/teste", (req, res) => {
     res.send({ message: "yoooooooooo!!!!!!!!!!" });
