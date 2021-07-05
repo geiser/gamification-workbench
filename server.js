@@ -1,55 +1,153 @@
-const express = require('express');
-const app = express();
-const fs = require('fs')
-const uuid = require('uuid');
-const path = require('path');
+const express = require("express");
+const path = require("path");
+const sessionManager = require("./sessionManager");
 require("dotenv").config();
+
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", express.static(path.join(__dirname, "./build")));
 
-app.post("/api/teste", (req, res) => {
-    res.send({ message: "yoooooooooo!!!!!!!!!!" });
-})
+// saves page header, only works in production build
+app.use("/(:sessionId)?", (req, res, next) => {
+    const sessionId = req.query.sessionId;
 
-app.post("/save-response", (req, res) => {
-    saveResponse(req.body);
-
-    res.end();
+    if (sessionId) {
+        sessionManager.setReturnFromPretestHeaders(sessionId, req.headers)
+        .finally(next);
+    } else {
+        next();
+    }
 });
 
-function saveResponse(body) {
-    // generates a random id for the participant's response
-    var respId = uuid.v1();
+app.get("/createSession", (req, res) => {
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
-    // data to be saved (participant's response)
-    var response = [ respId ];
-
-    // responses from body
-    for (const r of config.responsesFromBody) {
-        response.push(body[r]);
-    }
-
-    response = response.join(";") + "\n";
-
-    fs.stat("responses.csv", (err) => {
-        if (err == null) {
-            // write the actual data and end with newline
-            fs.appendFile("responses.csv", response, (err) => {
-                if (err) throw err;
-            });
-        } else {
-            var headers = [ "responseId", ...config.responsesFromBody ];
-            headers = headers.join(";") + "\n";
-
-            fs.writeFile("responses.csv", headers + response, (err) => {
-                if (err) throw err;
-                console.log("Response saved!");
-            })
-        }
+    sessionManager.createSession(ip)
+    .then(session => {
+        res.status(200).send(session);
+    })
+    .catch(e => {
+        console.error(e);
+        res.status(401).send(e);
     });
-}
+});
+
+app.get("/validateSession", (req, res) => {
+    const { sessionId, created, environmentName, redirectedToPretest } = req.query;
+
+    sessionManager.getSession(sessionId)
+    .then(session => {
+        if (!session
+            || session.created != created
+            || !session.active
+            || session.environmentName != environmentName
+            || session.redirectedToPretest != JSON.parse(redirectedToPretest) // ayy
+        ) {
+            // doesn't match
+            return res.status(401).end();
+        }
+
+        res.status(200).send({ success: true });
+    })
+    .catch(e => {
+        // session does not exist
+        res.status(401).end();
+    });
+});
+
+app.get("/setUserSentToPretest", (req, res) => {
+    const { sessionId, url } = req.query;
+
+    if (!sessionId || !url)
+        return res.status(401).end("invalid params");
+
+    sessionManager.setUserSentToPretest(sessionId, url)
+    .then(() => {
+        res.status(200).end();
+    })
+    .catch(e => {
+        console.error(e);
+        res.status(401).end(e);
+    });
+});
+
+app.get("/setReturnFromPretest", (req, res) => {
+    const { sessionId, referrer, url } = req.query;
+
+    if (!sessionId || !referrer || !url)
+        return res.status(401).end("invalid params");
+    
+    sessionManager.setReturnFromPretest(sessionId, referrer, url)
+    .then(() => {
+        res.status(200).end();
+    })
+    .catch(e => {
+        console.error(e);
+        res.status(401).end(e);
+    })
+});
+
+app.get("/setUserSentToPosttest", (req, res) => {
+    const { sessionId, url } = req.query;
+
+    if (!sessionId || !url)
+        return res.status(401).end("invalid params");
+
+    sessionManager.setUserSentToPosttest(sessionId, url)
+    .then(() => {
+        res.status(200).end();
+    })
+    .catch(e => {
+        console.error(e);
+        res.status(401).end(e);
+    });
+});
+
+app.get("/notifyAnswer", (req, res) => {
+    const { sessionId, questionId, answer } = req.query;
+
+    if (!sessionId || !questionId || !answer)
+        return res.status(401).end("invalid params");
+
+    sessionManager.notifyAnswer(sessionId, questionId, answer)
+    .then(() => {
+        res.status(200).end();
+    })
+    .catch(e => {
+        console.error(e);
+        res.status(401).end(e);
+    });
+});
+
+app.get("/notifyTrophyUnlock", (req, res) => {
+    const { sessionId, trophyId } = req.query;
+
+    if (!sessionId || !trophyId)
+        return res.status(401).end("invalid params");
+
+    sessionManager.notifyTrophyUnlock(sessionId, trophyId)
+    .then(() => {
+        res.status(200).end();
+    })
+    .catch(e => {
+        console.error(e);
+        res.status(401).end(e);
+    });
+});
+
+app.post("/notifyGame", (req, res) => {
+    sessionManager.notifyGame(req.body)
+    .then(() => {
+        res.status(200).end();
+    })
+    .catch(e => {
+        console.error(e);
+        res.status(401).end(e);
+    });
+});
+
 
 app.listen(process.env.SERVER_PORT, process.env.SERVER_HOST, function() {
     console.log(`The server is listening to ${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`);

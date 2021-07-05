@@ -4,7 +4,7 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import * as colors from "@material-ui/core/colors";
 import './App.css';
 
-import { storage, getSessionId, selectEnvironment, wasAlreadyRedirectedToPretest } from "./scripts";
+import { createSession, getSessionEnvironment, wasAlreadyRedirectedToPretest, getSessionId, sendUserToPretest, notifyUserReturnedFromPretest } from "./sessionManager";
 import { default as config } from  "./configuration";
 import Context from "./contexts/Context";
 
@@ -22,40 +22,50 @@ export default class App extends React.Component {
         };
 
         this.theme = null;
-        this.sendUserToPretest = false;
 
         this.setReady = this.setReady.bind(this);
         this.mountErrorScreen = this.mountErrorScreen.bind(this);
     }
 
     componentDidMount() {
-        selectEnvironment()
-        .then(envName => config.getEnvironment(envName))
-        .then(environment => {
-            // Se 'environmentName' não estiver definido, é porque a sessão é inválida ou é a primeira vez que o usuário acessa a página
-            // eslint-disable-next-line
-            if (storage.getItem("environmentName") == undefined && !wasAlreadyRedirectedToPretest()) {
-                storage.setItem("environmentName", environment.name);
-                storage.setItem("redirectedToPretest", true);
+        const envName = getSessionEnvironment();
+        const wasRedirectedToPretest = wasAlreadyRedirectedToPretest();
 
-                if (environment.preTest) {
-                    window.location = environment.preTest
+        // sanity check; no envname = no session
+        if (!envName) {
+            // creates new session and reloads the page
+            return createSession().finally(() => {
+                window.location.reload();
+            });
+        }
+
+        config.getEnvironment(envName)
+        .then(environment => {
+            if (environment.preTest) {
+                // redirects user to pretest
+                if (!wasRedirectedToPretest) {
+                    const pretestUrl = environment.preTest
                         .replace(/\{\{sessionId\}\}/g, getSessionId())
-                        .replace(/\{\{points\}\}/g, 0) // ??????
+                        .replace(/\{\{points\}\}/g, 0) // ???????
                     ;
 
-                    return;
-                } else {
-                    console.warn(`Pretest for "${environment.name}" is not defined in "${environment.file}"`);
+                    return sendUserToPretest(pretestUrl);
                 }
+                // user has returned from pretest
+                else {
+                    notifyUserReturnedFromPretest();
+                }
+            } else {
+                console.warn(`Pretest for "${environment.name}" is not defined in "${environment.file}"`);
             }
-
-            console.table(storage);
 
             this.theme = this.defineTheme(environment.theme);
             this.setState({ environment }, this.setReady);
         })
-        .catch(this.mountErrorScreen);
+        .catch(e => {
+            this.mountErrorScreen(e.toString());
+            console.error(e);
+        });
     }
 
     setReady() {

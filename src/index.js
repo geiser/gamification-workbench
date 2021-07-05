@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createSession, validateSession } from "./scripts";
-//import { default as config } from  "./configuration";
+import { createSession, validateSession } from "./sessionManager";
 
 (function() {
     const storage = window.localStorage;

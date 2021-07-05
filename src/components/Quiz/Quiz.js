@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { AvatarSelection, Loading, Question } from "../";
-import { getSessionId } from "../../scripts";
+import { getSessionId } from "../../sessionManager";
+import { sendUserToPosttest, notifyAnswer, notifyGame } from "../../sessionManager";
 import Context from "../../contexts/Context";
 import "./Quiz.css";
 
@@ -35,6 +36,8 @@ export default class Quiz extends React.Component {
             textContent: env.localization.avatarSelection.text,
             avatarList: env.avatarList,
         });
+
+        notifyGame({ environmentName: env.name });
     }
 
     changeHeader(headerText) {
@@ -53,22 +56,26 @@ export default class Quiz extends React.Component {
             headerText: localization.quiz.header,
             textContent: localization.quiz.text,
         });
+
+        notifyGame({ started: Date.now() });
     }
 
     onAnswer({ questionId, answer }) {
-        // TO DO
-        console.dir({ questionId, answer });
+        notifyAnswer(questionId, answer);
     }
 
     onFinish() {
-        // TO DO: Send data to server
         let env = this.context.environment;
 
+        notifyGame({ ended: Date.now() });
+
         if (env.postTest) {
-            window.location = env.postTest
+            const posttestUrl = env.postTest
                 .replace(/\{\{sessionId\}\}/g, getSessionId())
                 .replace(/\{\{points\}\}/g, this.context.getPlayer().points)
             ;
+
+            sendUserToPosttest(posttestUrl);
         } else {
             console.warn(`Posttest for "${env.name}" is not defined in "${env.file}"`);
         }

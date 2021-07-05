@@ -3,6 +3,7 @@ import { Container, Box } from "@material-ui/core";
 import { Player, Header, PlayerStats, Ranking, Quiz, Trophies, Loading } from "../";
 import Context from "../../contexts/Context";
 import "./Game.css";
+import { notifyTrophyUnlock } from "../../sessionManager";
 
 export default class Game extends React.Component {
     static contextType = Context;
@@ -94,6 +95,8 @@ export default class Game extends React.Component {
                 this.setState({
                     trophies: Object.values(trophyList),
                 });
+
+                notifyTrophyUnlock(id);
             }
         }
     }
