@@ -12,8 +12,6 @@ export { default as Loading } from "./Loading/Loading.js";
 
 export { default as Game } from "./Game/Game.js";
 
-export { default as GameContainer } from "./GameContainer/GameContainer.js";
-
 export { default as Player } from "./Player/Player.js";
 
 export { default as PlayerStats } from "./PlayerStats/PlayerStats.js";
