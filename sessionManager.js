@@ -30,7 +30,9 @@ function selectEnvironment() {
     if (participantAllocation === "random") {
         return rand(environments);
     } else if (!isNaN(participantAllocation)) {
-        // TO DO
+        let noParticipants = Object.keys(sessionData).length;
+
+        return environments[Math.trunc(noParticipants / participantAllocation) % environments.length];
     } else {
         throw new Error("invalid environment");
     }
