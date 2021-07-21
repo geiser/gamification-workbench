@@ -1,7 +1,9 @@
 ## Como configurar a plataforma
 
 ### Configurando os ambientes
+
 ##### 1. Arquivo de configuração
+
 Os ambientes da aplicação são definidos no arquivo `config.json`, localizado na pasta `src`.
 Este arquivo contém duas variáveis:
 * `participantAllocation`
@@ -33,6 +35,7 @@ Este arquivo contém duas variáveis:
 ```
 
 ##### 2. Configuração do ambiente
+
 Aqui será explicado as variáveis usadas para configurar um ambiente. Caso alguma dessas variáveis não esteja presente no arquivo de configuração, será usado o valor definido no ambiente `default`.
 Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json) para ver um arquivo de exemplo.
 
@@ -84,7 +87,7 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 
 * `trophies` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L196)
 	Define os troféus que o usuário pode ganhar.
-	Esta variável é um array de objetos que deve ter as seguintes propriedades:
+	Esta variável é um array de objetos que devem ter as seguintes propriedades:
 	* `id` — ID do troféu. Deve ser único para cada troféu
 	* `lockedImage` — Link da imagem que aparecerá quando o troféu não estiver liberado
 	* `image` — Link da imagem que aparecerá quando o troféu for liberado
@@ -97,21 +100,30 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 		Ao menos um dos quesitos deve ser definido. Os que não forem necessários devem ser `0`
 
 ### Configurando o servidor
+
 Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável `SERVER_PORT` no arquivo `.env` e o campo `proxy` no arquivo `package.json` (a porta deve ser igual nos dois arquivos).
 
 ### Rodando a aplicação
+
 1. Certifique-se que o [Node.js](https://nodejs.org/en/) está instalado
 2. Abra a linha de comando no diretório do projeto
-3. Instale as dependências:
-```npm install```
+3. Instale as dependências: `npm install`
 4. Inicie o projeto
-	a) Ambiente de desenvolvimento:
-```npm run start```
-	b) Ambiente de produção
-```npm run build```
-```npm run server```
+
+&nbsp;&nbsp;&nbsp;&nbsp; a) Ambiente de desenvolvimento: `npm run start`
+* O ambiente de desenvolvimento sempre roda na porta 3000
+
+&nbsp;&nbsp;&nbsp;&nbsp; b) Ambiente de produção
+
+```
+npm run build
+npm run server
+```
+
+* O ambiente de produção roda na porta configurada no passo [acima](#configurando-o-servidor).
 
 ### Frameworks utilizados
+
 * React
 	* [Documentação](https://reactjs.org/docs/getting-started.html)
 * Material-UI
