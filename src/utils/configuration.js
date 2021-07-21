@@ -1,4 +1,4 @@
-import { default as config } from "./config.json";
+import { default as config } from "../config.json";
 
 export default class Config {
     static getVar(key) {
@@ -10,7 +10,7 @@ export default class Config {
     }
 
     static async readConfigFile(file) {
-        return await require("./environments/" + file);
+        return await require("../environments/" + file);
     }
 
     static async getRawEnvironment(envName) {
