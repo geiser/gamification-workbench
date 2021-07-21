@@ -41,6 +41,8 @@ export default class App extends React.Component {
 
         config.getEnvironment(envName)
         .then(environment => {
+            document.title = environment.localization.pageTitle;
+            
             if (environment.preTest) {
                 // redirects user to pretest
                 if (!wasRedirectedToPretest) {
