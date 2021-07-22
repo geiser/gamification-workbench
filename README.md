@@ -41,7 +41,8 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 
 * `localization` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L2)
 	Aqui são definidas as strings que aparecem no site.
-	* `title` — Título da página
+	* `pageTitle` — Título da página
+	* `title` — Texto que aparece no cabeçalho da página
 	* `points` — Texto na caixa de pontos
 	* `rightAnswers` — Texto na caixa de acertos
 	* `ranking` — Texto na caixa do ranking
@@ -62,7 +63,7 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 * `theme` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L24)
 	Define o esquema de cores do ambiente.
 	Há apenas dois campos: `primary` e `secondary`. Apenas a paleta de cores fornecida em `primary` é usada, mas isso pode ser modificado no código.
-	Os valores destes campos podem ser paletas de cores fornecidas pela biblioteca _Material-UI_ ([clique aqui](https://material-ui.com/customization/color/)).
+	Os valores destes campos podem ser nomes de paletas de cores fornecidas pela biblioteca _Material-UI_ ([clique aqui](https://material-ui.com/customization/color/#playground)) ou objetos com códigos de cores ([clique aqui](https://material-ui.com/customization/palette/#providing-the-colors-directly)) (apenas a propriedade `"500"` é obrigatória).
 
 * `ranking` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L29)
 	Define o placar do ambiente. Esta variável aceita apenas um array de objetos que devem ter as seguintes propriedades:
@@ -97,7 +98,24 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 		* `points` — Quantidade mínima de pontos
 		* `correctAnswers` — Número de respostas corretas
 		* `question` — Liberado automaticamente ao chegar na pergunta especificada
-		Ao menos um dos quesitos deve ser definido. Os que não forem necessários devem ser `0`
+		* Ao menos um dos requesitos deve ser definido. Os que não forem necessários devem ser `0`
+
+### Integrando com o LimeSurvey
+
+1. Crie uma nova questão (1) e coloque seu código como `sessionId` (2) e a marque como obrigatória na aba de configurações à direta.
+2. Vá na aba "Mostrar" (3), deixe a questão oculta (4) e clique em "Salvar" (5)
+
+![Passos 1 e 2 para integrar com o limesurvey](imgs/1.png)
+
+3. Na aba de configurações do questionario, no lado esquerdo, vá em "Painel de integração" (1) e clique em "Incluir parâmetro URL" (2). Um pop-up irá aparecer, basta escrever `sessionId` no primeiro campo e selecionar a questão que você criou no passo anterior no segundo campo, após isso basta clicar no botão de salvar do popup (3) e da página (4)
+
+![Passo 3 para integrar com o limesurvey](imgs/2.png)
+
+4. Na aba de configurações do questionario, vá em "Elementos de texto" (1) e coloque a URL para qual o usuário será destinado após submeter o questionário (2). Deve ser o link para o servidor onde o tutor está instalado seguido de `?sessionId={PASSTHRU:sessionId}` no final da URL. Feito isto, basta clicar em "Salvar" (3).
+* Isso só deve ser feito no questionário de pré-teste.
+
+![Passo 4 para integrar com o limesurvey](imgs/3.png)
+
 
 ### Configurando o servidor
 
@@ -110,17 +128,17 @@ Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável 
 3. Instale as dependências: `npm install`
 4. Inicie o projeto
 
-&nbsp;&nbsp;&nbsp;&nbsp; a) Ambiente de desenvolvimento: `npm run start`
-* O ambiente de desenvolvimento sempre roda na porta 3000
+* 4a. Ambiente de desenvolvimento: `npm start`
+	* O ambiente de desenvolvimento sempre roda na porta 3000
 
-&nbsp;&nbsp;&nbsp;&nbsp; b) Ambiente de produção
+* 4b. Ambiente de produção
+	* O ambiente de produção roda na porta configurada no passo [acima](#configurando-o-servidor).
 
 ```
 npm run build
 npm run server
 ```
 
-* O ambiente de produção roda na porta configurada no passo [acima](#configurando-o-servidor).
 
 ### Frameworks utilizados
 
