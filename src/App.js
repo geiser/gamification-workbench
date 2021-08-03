@@ -1,12 +1,11 @@
 import React from "react";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import { defineTheme } from "./utils/themes";
 import { ErrorScreen, Game, Loading } from "./components";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import * as colors from "@material-ui/core/colors";
-import './App.css';
-
 import { createSession, getSessionEnvironment, wasAlreadyRedirectedToPretest, getSessionId, sendUserToPretest, notifyUserReturnedFromPretest } from "./sessionManager";
-import { default as config } from  "./configuration";
+import { default as config } from  "./utils/configuration";
 import Context from "./contexts/Context";
+import './App.css';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -41,6 +40,8 @@ export default class App extends React.Component {
 
         config.getEnvironment(envName)
         .then(environment => {
+            document.title = environment.localization.pageTitle;
+            
             if (environment.preTest) {
                 // redirects user to pretest
                 if (!wasRedirectedToPretest) {
@@ -59,7 +60,7 @@ export default class App extends React.Component {
                 console.warn(`Pretest for "${environment.name}" is not defined in "${environment.file}"`);
             }
 
-            this.theme = this.defineTheme(environment.theme);
+            this.theme = defineTheme(environment.theme);
             this.setState({ environment }, this.setReady);
         })
         .catch(e => {
@@ -77,15 +78,6 @@ export default class App extends React.Component {
             message = message.message || message.errorMessage;
         
         this.setState({ errorMessage: message });
-    }
-
-    defineTheme(theme) {
-        return createMuiTheme({
-            palette: {
-                primary: colors[theme.primary],
-                secondary: colors[theme.secondary],
-            }
-        });
     }
 
     render() {

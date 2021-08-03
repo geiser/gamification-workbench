@@ -1,7 +1,9 @@
 ## Como configurar a plataforma
 
 ### Configurando os ambientes
+
 ##### 1. Arquivo de configuração
+
 Os ambientes da aplicação são definidos no arquivo `config.json`, localizado na pasta `src`.
 Este arquivo contém duas variáveis:
 * `participantAllocation`
@@ -33,12 +35,14 @@ Este arquivo contém duas variáveis:
 ```
 
 ##### 2. Configuração do ambiente
+
 Aqui será explicado as variáveis usadas para configurar um ambiente. Caso alguma dessas variáveis não esteja presente no arquivo de configuração, será usado o valor definido no ambiente `default`.
 Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json) para ver um arquivo de exemplo.
 
 * `localization` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L2)
 	Aqui são definidas as strings que aparecem no site.
-	* `title` — Título da página
+	* `pageTitle` — Título da página
+	* `title` — Texto que aparece no cabeçalho da página
 	* `points` — Texto na caixa de pontos
 	* `rightAnswers` — Texto na caixa de acertos
 	* `ranking` — Texto na caixa do ranking
@@ -59,7 +63,7 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 * `theme` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L24)
 	Define o esquema de cores do ambiente.
 	Há apenas dois campos: `primary` e `secondary`. Apenas a paleta de cores fornecida em `primary` é usada, mas isso pode ser modificado no código.
-	Os valores destes campos podem ser paletas de cores fornecidas pela biblioteca _Material-UI_ ([clique aqui](https://material-ui.com/customization/color/)).
+	Os valores destes campos podem ser nomes de paletas de cores fornecidas pela biblioteca _Material-UI_ ([clique aqui](https://material-ui.com/customization/color/#playground)) ou objetos com códigos de cores ([clique aqui](https://material-ui.com/customization/palette/#providing-the-colors-directly)) (apenas a propriedade `"500"` é obrigatória).
 
 * `ranking` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L29)
 	Define o placar do ambiente. Esta variável aceita apenas um array de objetos que devem ter as seguintes propriedades:
@@ -84,7 +88,7 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 
 * `trophies` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L196)
 	Define os troféus que o usuário pode ganhar.
-	Esta variável é um array de objetos que deve ter as seguintes propriedades:
+	Esta variável é um array de objetos que devem ter as seguintes propriedades:
 	* `id` — ID do troféu. Deve ser único para cada troféu
 	* `lockedImage` — Link da imagem que aparecerá quando o troféu não estiver liberado
 	* `image` — Link da imagem que aparecerá quando o troféu for liberado
@@ -94,24 +98,50 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 		* `points` — Quantidade mínima de pontos
 		* `correctAnswers` — Número de respostas corretas
 		* `question` — Liberado automaticamente ao chegar na pergunta especificada
-		Ao menos um dos quesitos deve ser definido. Os que não forem necessários devem ser `0`
+		* Ao menos um dos requesitos deve ser definido. Os que não forem necessários devem ser `0`
+
+### Integrando com o LimeSurvey
+
+1. Crie uma nova questão (1) e coloque seu código como `sessionId` (2) e a marque como obrigatória na aba de configurações à direta.
+2. Vá na aba "Mostrar" (3), deixe a questão oculta (4) e clique em "Salvar" (5)
+
+![Passos 1 e 2 para integrar com o limesurvey](imgs/1.png)
+
+3. Na aba de configurações do questionario, no lado esquerdo, vá em "Painel de integração" (1) e clique em "Incluir parâmetro URL" (2). Um pop-up irá aparecer, basta escrever `sessionId` no primeiro campo e selecionar a questão que você criou no passo anterior no segundo campo, após isso basta clicar no botão de salvar do popup (3) e da página (4)
+
+![Passo 3 para integrar com o limesurvey](imgs/2.png)
+
+4. Na aba de configurações do questionario, vá em "Elementos de texto" (1) e coloque a URL para qual o usuário será destinado após submeter o questionário (2). Deve ser o link para o servidor onde o tutor está instalado seguido de `?sessionId={PASSTHRU:sessionId}` no final da URL. Feito isto, basta clicar em "Salvar" (3).
+* Isso só deve ser feito no questionário de pré-teste.
+
+![Passo 4 para integrar com o limesurvey](imgs/3.png)
+
 
 ### Configurando o servidor
+
 Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável `SERVER_PORT` no arquivo `.env` e o campo `proxy` no arquivo `package.json` (a porta deve ser igual nos dois arquivos).
 
 ### Rodando a aplicação
+
 1. Certifique-se que o [Node.js](https://nodejs.org/en/) está instalado
 2. Abra a linha de comando no diretório do projeto
-3. Instale as dependências:
-```npm install```
+3. Instale as dependências: `npm install`
 4. Inicie o projeto
-	a) Ambiente de desenvolvimento:
-```npm run start```
-	b) Ambiente de produção
-```npm run build```
-```npm run server```
+
+* 4a. Ambiente de desenvolvimento: `npm start`
+	* O ambiente de desenvolvimento sempre roda na porta 3000
+
+* 4b. Ambiente de produção
+	* O ambiente de produção roda na porta configurada no passo [acima](#configurando-o-servidor).
+
+```
+npm run build
+npm run server
+```
+
 
 ### Frameworks utilizados
+
 * React
 	* [Documentação](https://reactjs.org/docs/getting-started.html)
 * Material-UI
