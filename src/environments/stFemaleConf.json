@@ -1,6 +1,6 @@
 {
-    "preTest": "#sessionId={{sessionId}}&points={{points}}",
-    "postTest": "#sessionId={{sessionId}}&points={{points}}",
+    "preTest": "",
+    "postTest": "",
 
     "theme": {
         "primary": "purple",
