@@ -101,6 +101,18 @@ function createSession(ip) {
     })
 }
 
+function closeSession(sessionId) {
+    return new Promise((resolve, reject) => {
+        if (!sessionExists(sessionId)) {
+            return reject("invalid session");
+        }
+
+        sessionData[sessionId].session.active = false;
+
+        resolve();
+    });
+}
+
 function setUserSentToPretest(sessionId, url) {
     return new Promise((resolve, reject) => {
         if (!sessionExists(sessionId)) {
@@ -262,6 +274,7 @@ setInterval(function saveSessions() {
 module.exports = {
     getSession,
     createSession,
+    closeSession,
     setUserSentToPretest,
     setReturnFromPretest,
     setReturnFromPretestHeaders,
