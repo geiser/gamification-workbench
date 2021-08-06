@@ -55,33 +55,33 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 	* `rightAnswer` — Texto que aparece ao acertar uma questão
 
 * `preTest` e `postTest` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L21)
-	Link direto para questionários externos de pré e pós-teste.
-	É possível passar parâmetros para os links fornecidos usando a sintaxe `{{param}}`. No momento os parâmetros suportados são:
-	* `{{sessionId}}` — É substituído pelo identificador único da sessão do usuário
-	* `{{points}}` — É substituído pelo número de pontos que o usuário fez no quiz
+	* Link direto para questionários externos de pré e pós-teste.
+	* É possível passar parâmetros para os links fornecidos usando a sintaxe `{{param}}`. No momento os parâmetros suportados são:
+		* `{{sessionId}}` — É substituído pelo identificador único da sessão do usuário
+		* `{{points}}` — É substituído pelo número de pontos que o usuário fez no quiz
 
 * `playSound`
-	Ativa ou desativa o feedback sonoro ao responder questão. Os valores podem ser `true` (para ativar) ou `false` (para desativar).
+	* Ativa ou desativa o feedback sonoro ao responder questão. Os valores podem ser `true` (para ativar) ou `false` (para desativar).
 
 * `theme` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L24)
-	Define o esquema de cores do ambiente.
-	Há apenas dois campos: `primary` e `secondary`. Apenas a paleta de cores fornecida em `primary` é usada, mas isso pode ser modificado no código.
-	Os valores destes campos podem ser nomes de paletas de cores fornecidas pela biblioteca _Material-UI_ ([clique aqui](https://material-ui.com/customization/color/#playground)) ou objetos com códigos de cores ([clique aqui](https://material-ui.com/customization/palette/#providing-the-colors-directly)) (apenas a propriedade `"500"` é obrigatória).
+	* Define o esquema de cores do ambiente.
+	* Há apenas dois campos: `primary` e `secondary`. Apenas a paleta de cores fornecida em `primary` é usada, mas isso pode ser modificado no código.
+	* Os valores destes campos podem ser nomes de paletas de cores fornecidas pela biblioteca _Material-UI_ ([clique aqui](https://material-ui.com/customization/color/#playground)) ou objetos com códigos de cores ([clique aqui](https://material-ui.com/customization/palette/#providing-the-colors-directly)) (apenas a propriedade `"500"` é obrigatória).
 
 * `ranking` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L29)
-	Define o placar do ambiente. Esta variável aceita apenas um array de objetos que devem ter as seguintes propriedades:
+	* Define o placar do ambiente. Esta variável aceita apenas um array de objetos que devem ter as seguintes propriedades:
 	* `name` — Nome do usuário no placar
 	* `points` — Número de pontos
 	* `avatar` — Link para a imagem do avatar
 		* Nos links, o parâmetro `{theme}` é substituido pelo nome do ambiente
 
 * `avatarList` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L47)
-	Define a lista de avatares que o usuário pode selecionar antes de entrar no quiz.
-	A lista é um array de strings onde cada string deve ser o link de um avatar. Nos links, o parâmetro `{theme}` é substituido pelo nome do ambiente.
+	* Define a lista de avatares que o usuário pode selecionar antes de entrar no quiz.
+	* A lista é um array de strings onde cada string deve ser o link de um avatar. Nos links, o parâmetro `{theme}` é substituido pelo nome do ambiente.
 
 * `questions` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L53)
-	Define as perguntas do quiz.
-	Esta variável é um array de objetos que devem ter as seguintes propriedades:
+	* Define as perguntas do quiz.
+	* Esta variável é um array de objetos que devem ter as seguintes propriedades:
 	* `id` — ID da pergunta. Deve ser único para cada pergunta
 	* `texto` (opcional) — Conteúdo da pergunta
 	* `image` (opcional) — Link da imagem que aparecerá na pergunta
@@ -90,8 +90,8 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 	* `rightAnswer` - Resposta correta. Deve ser escrita exatamente como no campo answers
 
 * `trophies` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L196)
-	Define os troféus que o usuário pode ganhar.
-	Esta variável é um array de objetos que devem ter as seguintes propriedades:
+	* Define os troféus que o usuário pode ganhar.
+	* Esta variável é um array de objetos que devem ter as seguintes propriedades:
 	* `id` — ID do troféu. Deve ser único para cada troféu
 	* `lockedImage` — Link da imagem que aparecerá quando o troféu não estiver liberado
 	* `image` — Link da imagem que aparecerá quando o troféu for liberado
