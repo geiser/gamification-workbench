@@ -22,6 +22,8 @@
     "preTest": "",
     "postTest": "",
 
+    "playSound": true,
+
     "theme": {
         "primary": "green",
         "secondary": "green"

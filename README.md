@@ -60,6 +60,9 @@ Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/
 	* `{{sessionId}}` — É substituído pelo identificador único da sessão do usuário
 	* `{{points}}` — É substituído pelo número de pontos que o usuário fez no quiz
 
+* `playSound`
+	Ativa ou desativa o feedback sonoro ao responder questão. Os valores podem ser `true` (para ativar) ou `false` (para desativar).
+
 * `theme` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L24)
 	Define o esquema de cores do ambiente.
 	Há apenas dois campos: `primary` e `secondary`. Apenas a paleta de cores fornecida em `primary` é usada, mas isso pode ser modificado no código.
