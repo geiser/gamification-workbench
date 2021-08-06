@@ -19,8 +19,10 @@
         }
     },
 
-    "preTest": "#sessionId={{sessionId}}&points={{points}}",
-    "postTest": "#sessionId={{sessionId}}&points={{points}}",
+    "preTest": "",
+    "postTest": "",
+
+    "playSound": true,
 
     "theme": {
         "primary": "green",

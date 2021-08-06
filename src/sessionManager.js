@@ -77,6 +77,14 @@ export function notifyUserReturnedFromPretest() {
     })
 }
 
+export function closeSession() {
+    return axios.get("/closeSession", {
+        params: {
+            sessionId: getSessionId(),
+        }
+    });
+}
+
 export function sendUserToPosttest(url) {
     axios.get("/setUserSentToPosttest", {
         params: {

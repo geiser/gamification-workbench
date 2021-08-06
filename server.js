@@ -34,6 +34,16 @@ app.get("/createSession", (req, res) => {
     });
 });
 
+app.get("/closeSession", (req, res) => {
+    sessionManager.closeSession(req.query.sessionId)
+    .then(() => {
+        res.send(200).end();
+    })
+    .catch(e => {
+        res.status(401).end();
+    })
+});
+
 app.get("/validateSession", (req, res) => {
     const { sessionId, created, environmentName, redirectedToPretest } = req.query;
 

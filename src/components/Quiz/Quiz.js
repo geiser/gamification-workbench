@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { AvatarSelection, Loading, Question } from "../";
-import { getSessionId } from "../../sessionManager";
+import { closeSession, getSessionId } from "../../sessionManager";
 import { sendUserToPosttest, notifyAnswer, notifyGame } from "../../sessionManager";
 import Context from "../../contexts/Context";
 import "./Quiz.css";
@@ -78,6 +78,8 @@ export default class Quiz extends React.Component {
             sendUserToPosttest(posttestUrl);
         } else {
             console.warn(`Posttest for "${env.name}" is not defined in "${env.file}"`);
+
+            closeSession();
         }
     }
 

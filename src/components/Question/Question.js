@@ -56,6 +56,8 @@ export default class Question extends React.Component {
         if (!this.valid)
             return;
 
+        const playSound = this.context.environment.playSound;
+
         this.props.onAnswer({
             questionId: this.currentQuestion.id,
             answer: answer,
@@ -66,14 +68,20 @@ export default class Question extends React.Component {
         // right
         if (answer === this.currentQuestion.rightAnswer) {
             this.player.updatePoints(10);
-            // new Audio('./assets/default/audio/right.mp3').play();
             this.setState({ showMessage: "right" });
+
+            if (playSound) {
+                new Audio('./assets/default/audio/right.mp3').play();
+            }
         }
         // wrong
         else {
             this.player.updatePoints(-5);
-            // new Audio('./assets/default/audio/wrong.mp3').play();
             this.setState({ showMessage: "wrong" });
+
+            if (playSound) {
+                new Audio('./assets/default/audio/wrong.mp3').play();
+            }
         }
 
         function hide() { this.setState({ showMessage: null }) }
