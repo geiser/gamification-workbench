@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
-import { AvatarSelection, Loading, Question } from "../";
+import { STMessage, AvatarSelection, Loading, Question } from "../";
 import { closeSession, getSessionId } from "../../sessionManager";
 import { sendUserToPosttest, notifyAnswer, notifyGame } from "../../sessionManager";
 import Context from "../../contexts/Context";
@@ -16,12 +16,14 @@ export default class Quiz extends React.Component {
             ready: false,
             headerText: null,
             textContent: null,
-            onQuiz: false,
+            phase: "",
             avatarList: [],
         };
 
         this.changeHeader = this.changeHeader.bind(this);
         this.changeText = this.changeText.bind(this);
+        this.startSTMessage = this.startSTMessage.bind(this);
+        this.startAvatarSelection = this.startAvatarSelection.bind(this);
         this.startQuiz = this.startQuiz.bind(this);
         this.onAnswer = this.onAnswer.bind(this);
         this.onFinish = this.onFinish.bind(this);
@@ -32,10 +34,14 @@ export default class Quiz extends React.Component {
 
         this.setState({
             ready: true,
-            headerText: env.localization.avatarSelection.header,
-            textContent: env.localization.avatarSelection.text,
             avatarList: env.avatarList,
         });
+
+        if (env.localization.stMessage != undefined) {
+            this.startSTMessage();
+        } else {
+            this.startAvatarSelection();
+        }
 
         notifyGame({ environmentName: env.name });
     }
@@ -48,11 +54,32 @@ export default class Quiz extends React.Component {
         this.setState({ textContent });
     }
 
+    startSTMessage() {
+        let env = this.context.environment;
+
+        this.setState({
+            phase: "onSTMessage",
+            headerText: env.localization.stMessage.header,
+            textContent: env.localization.stMessage.text,
+        });
+    }
+
+    startAvatarSelection() {
+        let env = this.context.environment;
+
+        this.setState({
+            phase: "onAvatarSelection",
+            headerText: env.localization.avatarSelection.header,
+            textContent: env.localization.avatarSelection.text,
+            avatarList: env.avatarList,
+        });
+    }
+
     startQuiz() {
         let localization = this.context.environment.localization;
 
         this.setState({
-            onQuiz: true,
+            phase: "onQuiz",
             headerText: localization.quiz.header,
             textContent: localization.quiz.text,
         });
@@ -89,7 +116,9 @@ export default class Quiz extends React.Component {
 
         if (!this.state.ready) {
             content = ( <Loading /> );
-        } else if (!this.state.onQuiz) {
+        } else if (this.state.phase == "onSTMessage") {
+            content = ( <STMessage onClickNext={this.startAvatarSelection} /> );
+        } else if (this.state.phase == "onAvatarSelection") {
             content = (
                 <AvatarSelection
                     setAvatar={player.setAvatar}
@@ -97,7 +126,7 @@ export default class Quiz extends React.Component {
                     onClickNext={this.startQuiz}
                 />
             );
-        } else {
+        } else if (this.state.phase == "onQuiz") {
             content = (
                 <Question
                     onAnswer={this.onAnswer}

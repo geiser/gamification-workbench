@@ -2,6 +2,8 @@ export { default as AnswerOptions } from "./AnswerOptions/AnswerOptions.js";
 
 export { default as Avatar} from "./Avatar/Avatar.js";
 
+export { default as STMessage} from "./STMessage/STMessage.js";
+
 export { default as AvatarSelection} from "./AvatarSelection/AvatarSelection.js";
 
 export { default as ErrorScreen} from "./ErrorScreen/ErrorScreen.js";

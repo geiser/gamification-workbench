@@ -5,6 +5,12 @@
         "rightAnswers": "Acertos",
         "ranking": "Ranking",
         "myTrophies": "Meus troféus",
+        "stMessage": {
+            "header": "0 - Mensagem",
+            "text": "Estudos cientificos tem demostrado que homens são os melhores em matemáticas. Agora, vamos a fazer um teste de lógica matemática.",
+            "next": "Continuar",
+            "img": "https://images-na.ssl-images-amazon.com/images/I/41NHie+y0AL._SX317_BO1,204,203,200_.jpg"
+        },
         "avatarSelection": {
             "header": "1 - Personalize",
             "text": "Escolha um avatar:",
