@@ -20,7 +20,7 @@ export default class Game extends React.Component {
 
         this.state = {
             ready: false,
-            username: "Alex",
+            username: "Você",
             avatar: "./assets/default/images/avatar.svg",
             testType: null,
             points: 0,
