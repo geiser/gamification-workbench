@@ -1,6 +1,6 @@
 {
-  "name": "gender_stereotype_experiment_react",
-  "version": "0.1.0",
+  "name": "gamification_workbench",
+  "version": "0.1",
   "private": true,
   "proxy": "http://localhost:8080/",
   "dependencies": {
