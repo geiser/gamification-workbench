@@ -126,21 +126,46 @@ Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável 
 
 ### Rodando a aplicação
 
-1. Certifique-se que o [Node.js](https://nodejs.org/en/) está instalado
+1. Certifique-se que o [Node.js](https://nodejs.org/en/) está instalado (versão minima: v14)
+   - Para atualizar a versão do node utilize o `nvm` (guia: [https://heynode.com/tutorial/install-nodejs-locally-nvm/](https://heynode.com/tutorial/install-nodejs-locally-nvm/))
 2. Abra a linha de comando no diretório do projeto
 3. Instale as dependências: `npm install`
 4. Inicie o projeto
 
-* 4a. Ambiente de desenvolvimento: `npm start`
-	* O ambiente de desenvolvimento sempre roda na porta 3000
+   * 4a. Ambiente de desenvolvimento: `npm start`
+	    * O ambiente de desenvolvimento sempre roda na porta 3000
 
-* 4b. Ambiente de produção
-	* O ambiente de produção roda na porta configurada no passo [acima](#configurando-o-servidor).
+    * 4b. Ambiente de produção
+	    * O ambiente de produção roda na porta configurada no passo [acima](#configurando-o-servidor).
 
-```
-npm run build
-npm run server
-```
+		```
+		npm run build
+		npm run server
+		```
+
+### Rodando a aplicação com docker
+
+1. Certifique-se que está instalado [Docker](https://www.docker.com/products/docker-desktop) e [Docker Compose](https://docs.docker.com/compose/install/)
+2. Abra a linha de comando no diretório do projeto
+3. Executar a aplicação usando em um container do Docker
+
+   ```
+   docker-compose up
+    ```
+  
+   Para executar a aplicação em um container do Docker no segundo plano (in the background)
+
+	```
+	docker-compose up -d
+	```
+
+   Para detener a executar da aplicação
+
+	```
+	docker-compose down
+	```
+
+4. Deseja mudar a porta (`port`) da aplicação o alguma configuração da execução da aplicação mude o arquivo `docker-compose.yml` ([mais info...](https://docs.docker.com/compose/compose-file/compose-file-v3/))
 
 
 ### Frameworks utilizados
