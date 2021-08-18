@@ -50,7 +50,8 @@ export default class Config {
         });
 
         // merge localization
-        Object.assign(env.localization, defaultEnv.localization);
+        if (!'localization' in env)
+            Object.assign(env.localization, defaultEnv.localization);
 
         env = this.replaceLinks(env);
         
