@@ -147,7 +147,7 @@ Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável 
 
 1. Certifique-se que está instalado [Docker](https://www.docker.com/products/docker-desktop) e [Docker Compose](https://docs.docker.com/compose/install/)
 2. Abra a linha de comando no diretório do projeto
-3. Executar a aplicação usando em um container do Docker
+3. Executar a aplicação em um container do Docker
 
    ```
    docker-compose up
