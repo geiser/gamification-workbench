@@ -37,7 +37,7 @@ Este arquivo contém duas variáveis:
 ##### 2. Configuração do ambiente
 
 Aqui será explicado as variáveis usadas para configurar um ambiente. Caso alguma dessas variáveis não esteja presente no arquivo de configuração, será usado o valor definido no ambiente `default`.
-Clique [aqui](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json) para ver um arquivo de exemplo.
+Clique [aqui](/src/environments/template.json) para ver um arquivo de exemplo.
 
 * `localization` [(exemplo)](https://gitlab.com/nees/experimente/gamification-workbench/-/blob/master/src/environments/template.json#L2)
 	Aqui são definidas as strings que aparecem no site.
