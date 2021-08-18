@@ -250,7 +250,7 @@ function notifyGame(data = {}) {
         }
 
         Object.keys(data).forEach(k => {
-            if (["sessionId", "started", "ended", "environmentName"].indexOf(k) === -1) {
+            if (["sessionId", "started", "ended", "environmentName", "correctAnswers", "points"].indexOf(k) === -1) {
                 delete data[k];
             }
         });
