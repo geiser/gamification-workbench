@@ -127,7 +127,7 @@ Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável 
 ### Rodando a aplicação
 
 1. Certifique-se que o [Node.js](https://nodejs.org/en/) está instalado (versão minima: v14)
-   - Para atualizar a versão do node utilize o `nvm` (guia: [https://heynode.com/tutorial/install-nodejs-locally-nvm/](https://heynode.com/tutorial/install-nodejs-locally-nvm/))
+   - Para atualizar a versão do node empregue o `nvm` (guia: [https://heynode.com/tutorial/install-nodejs-locally-nvm/](https://heynode.com/tutorial/install-nodejs-locally-nvm/))
 2. Abra a linha de comando no diretório do projeto
 3. Instale as dependências: `npm install`
 4. Inicie o projeto
