@@ -1,19 +1,28 @@
-FROM node:16-alpine AS v0.1
-
-MAINTAINER Geiser Chalco <geiser@alumni.usp.br>
-
-LABEL org.label-schema.license="GPL-3.0" \
-      org.label-schema.vcs-url="https://github.com/geiser/gamification-workbench" \
-      org.label-schema.vendor="Gamification Workbench" \
-      maintainer="Geiser Chalco <geiser@alumni.usp.br>"
+FROM node:14-alpine
 
 WORKDIR /home/node/app
 
-RUN npm install -g increase-memory-limit
-RUN increase-memory-limit
-RUN npm install -g concurrently
-RUN npm install -g react-scripts
+RUN apk add bash
+RUN apk add yarn
 
-COPY package*.json ./
-RUN npm install
-RUN rm package*.json
+RUN npm install --global increase-memory-limit
+RUN increase-memory-limit
+RUN npm install --global concurrently
+RUN npm install --global react-scripts
+RUN npm install --global nodemon
+
+COPY . ./
+
+RUN rm -Rf build
+RUN rm -Rf node_modules
+
+RUN yarn install
+RUN yarn run build-client
+
+RUN chown -R node:node /home/node/app
+RUN mkdir -p node_modules/.cache
+RUN chmod -R 777 node_modules/.cache
+
+EXPOSE 5000
+
+CMD ["yarn", "start"]

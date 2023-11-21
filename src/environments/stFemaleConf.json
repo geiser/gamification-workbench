@@ -1,4 +1,24 @@
 {
+    "localization": {
+        "stMessage": {
+            "header": "0 - Mensagem",
+            "text": "No ensino superior, a cada ano, há mais mulheres que estão fazendo licenciatura em matemática.",
+            "next": "Continuar",
+            "img": "https://images-na.ssl-images-amazon.com/images/I/41NHie+y0AL._SX317_BO1,204,203,200_.jpg"
+        },
+        "avatarSelection": {
+            "header": "1 - Personalize",
+            "text": "Escolha um avatar:",
+            "next": "Continuar"
+        },
+        "wrongAnswer": "Resposta errada!",
+        "rightAnswer": "Resposta certa!",
+        "quiz": {
+            "header": "Responda!",
+            "text": "Responda as questões abaixo para ganhar pontos, trofeus e atingir uma melhor posição no ranking!"
+        }
+    },
+
     "preTest": "",
     "postTest": "",
 
