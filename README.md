@@ -182,6 +182,7 @@ Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável 
 	```
 
 5. Deseja mudar a porta (`port`) da aplicação o alguma configuração da execução da aplicação mude o arquivo `docker-compose.yml` ([mais info...](https://docs.docker.com/compose/compose-file/compose-file-v3/))
+   Por default a aplicação é executada no [http://localhost:8080/](http://localhost:8080/) 
 
 
 ### Frameworks utilizados
