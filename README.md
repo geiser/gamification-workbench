@@ -153,15 +153,23 @@ Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável 
 
    ```
    docker-compose build --no-cache
-    ```
+   ```
 
 3. Executar a aplicação em um container do Docker
 
    ```
    docker-compose up
-    ```
-  
-   Para executar a aplicação em um container do Docker no segundo plano (in the background)
+   ```
+
+   Para executar a aplicação
+
+   ```
+   docker-compose up
+   ```
+
+   Para detener a executar da aplicação (use **Ctrl+c** ou feche o terminal)
+
+4. Para executar a aplicação em um container do Docker no segundo plano (in the background)
 
 	```
 	docker-compose up -d
@@ -173,7 +181,7 @@ Por padrão, o servidor roda na porta 8080. Para trocar basta mudar a variável 
 	docker-compose down
 	```
 
-4. Deseja mudar a porta (`port`) da aplicação o alguma configuração da execução da aplicação mude o arquivo `docker-compose.yml` ([mais info...](https://docs.docker.com/compose/compose-file/compose-file-v3/))
+5. Deseja mudar a porta (`port`) da aplicação o alguma configuração da execução da aplicação mude o arquivo `docker-compose.yml` ([mais info...](https://docs.docker.com/compose/compose-file/compose-file-v3/))
 
 
 ### Frameworks utilizados
