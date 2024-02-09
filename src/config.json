@@ -3,7 +3,7 @@
     "environments": {
         "default": "defaultConf.json",
 
-        "stMale": "stMaleConf.json",
+        "stMaleBoost": "stMaleConf.json",
         "stFemale": "stFemaleConf.json"
     }       
 }
