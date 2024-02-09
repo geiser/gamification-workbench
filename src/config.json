@@ -3,6 +3,6 @@
     "environments": {
         "default": "defaultConf.json",
 
-        "stMale": "stMale.json"
+        "stFemale": "stFemale.json"
     }       
 }
