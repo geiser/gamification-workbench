@@ -54,9 +54,9 @@
     }],
 
     "avatarList": [
-        "./assets/default/images/avatar1.png",
-        "./assets/default/images/avatar2.png",
-        "./assets/default/images/avatar3.png"
+        "./assets/{theme}/images/avatar1.png",
+        "./assets/{theme}/images/avatar2.png",
+        "./assets/{theme}/images/avatar3.png"
     ],
     
     "questions": [
