@@ -38,25 +38,25 @@
     "ranking":  [{
         "name": "Alan",
         "points": 79,
-        "avatar": "./assets/{theme}/images/ranking1.png"
+        "avatar": "./assets/default/images/ranking1.png"
     }, {
         "name": "Valentine",
         "points": 75,
-        "avatar": "./assets/{theme}/images/ranking2.png"
+        "avatar": "./assets/default/images/ranking2.png"
     }, {
         "name": "Francis",
         "points": 63,
-        "avatar": "./assets/{theme}/images/ranking3.png"
+        "avatar": "./assets/default/images/ranking3.png"
     }, {
         "name": "Danni",
         "points": 27,
-        "avatar": "./assets/{theme}/images/ranking4.png"
+        "avatar": "./assets/default/images/ranking4.png"
     }],
 
     "avatarList": [
-        "./assets/{theme}/images/avatar1.png",
-        "./assets/{theme}/images/avatar2.png",
-        "./assets/{theme}/images/avatar3.png"
+        "./assets/default/images/avatar1.png",
+        "./assets/default/images/avatar2.png",
+        "./assets/default/images/avatar3.png"
     ],
     
     "questions": [
