@@ -28,19 +28,19 @@
     },
 
  "ranking": [{
-        "name": "Alan",
+        "name": "Joana e Karol",
         "points": 79,
         "avatar": "./assets/{theme}/images/ranking1.png"
     }, {
-        "name": "Valentine",
+        "name": "Ingrid e Juliana",
         "points": 75,
         "avatar": "./assets/{theme}/images/ranking2.png"
     }, {
-        "name": "Francis",
+        "name": "Marcela e Carla",
         "points": 63,
         "avatar": "./assets/{theme}/images/ranking3.png"
     }, {
-        "name": "Danni",
+        "name": "Danniela e Mariana",
         "points": 27,
         "avatar": "./assets/{theme}/images/ranking4.png"
     }],
