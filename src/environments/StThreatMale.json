@@ -7,9 +7,9 @@
         "myTrophies": "Meus troféus",
         "stMessage": {
             "header": "0 - Mensagem",
-            "text": "Estudo diz que homens possuem mais facilidade na área de exatas do que mulheres",
+            "text": "Estudo diz que mulheres possuem mais facilidade na área de exatas do que homens",
             "next": "Continuar",
-            "img": ""
+            "img": "file:///C:/Users/reudi/Desktop/Wiliane%20Lima/STFEMALE.png"
         },
         "avatarSelection": {
             "header": "1 - Personalize",
@@ -28,32 +28,32 @@
     "postTest": "",
 
     "theme": {
-        "primary": "blue",
-        "secondary": "blue"
+        "primary": "purple",
+        "secondary": "purple"
     },
 
     "ranking": [{
-        "name": "Alan",
+        "name": "Vanessa e Joana",
         "points": 79,
         "avatar": "./assets/{theme}/images/ranking1.png"
     }, {
-        "name": "Valentine",
+        "name": "Valentina e Raissa",
         "points": 75,
         "avatar": "./assets/{theme}/images/ranking2.png"
     }, {
-        "name": "Francis",
+        "name": "Ingridy e Marcela",
         "points": 63,
         "avatar": "./assets/{theme}/images/ranking3.png"
     }, {
-        "name": "Danni",
+        "name": "Daniela e Mariana",
         "points": 27,
         "avatar": "./assets/{theme}/images/ranking4.png"
     }],
 
     "avatarList": [
-        "./assets/stMale/images/avatar1.png",
-        "./assets/stMale/images/avatar2.png",
-        "./assets/stMale/images/avatar3.png"
+        "./assets/stFemale/images/avatar1.png",
+        "./assets/stFemale/images/avatar2.png",
+        "./assets/stFemale/images/avatar3.png"
     ]
 }
 
