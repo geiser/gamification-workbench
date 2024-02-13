@@ -46,8 +46,8 @@
     }],
 
     "avatarList": [
-        "./assets/stMale/images/avatar1.png",
-        "./assets/stMale/images/avatar2.png",
-        "./assets/stMale/images/avatar3.png"
+        "./assets/stFemale/images/avatar1.png",
+        "./assets/stFemale/images/avatar2.png",
+        "./assets/stFemale/images/avatar3.png"
     ]
 }
