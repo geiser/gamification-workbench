@@ -25,5 +25,29 @@
     "theme": {
         "primary": "purple",
         "secondary": "purple"
-    }
+    },
+
+ "ranking": [{
+        "name": "Alan",
+        "points": 79,
+        "avatar": "./assets/{theme}/images/ranking1.png"
+    }, {
+        "name": "Valentine",
+        "points": 75,
+        "avatar": "./assets/{theme}/images/ranking2.png"
+    }, {
+        "name": "Francis",
+        "points": 63,
+        "avatar": "./assets/{theme}/images/ranking3.png"
+    }, {
+        "name": "Danni",
+        "points": 27,
+        "avatar": "./assets/{theme}/images/ranking4.png"
+    }],
+
+    "avatarList": [
+        "./assets/stMale/images/avatar1.png",
+        "./assets/stMale/images/avatar2.png",
+        "./assets/stMale/images/avatar3.png"
+    ]
 }
