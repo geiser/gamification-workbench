@@ -33,19 +33,19 @@
     },
 
     "ranking": [{
-        "name": "Alan",
+        "name": "Alan e Marcos",
         "points": 79,
         "avatar": "./assets/{theme}/images/ranking1.png"
     }, {
-        "name": "Valentine",
+        "name": "Vitor e Lucas",
         "points": 75,
         "avatar": "./assets/{theme}/images/ranking2.png"
     }, {
-        "name": "Francis",
+        "name": "Francis e Roberto",
         "points": 63,
         "avatar": "./assets/{theme}/images/ranking3.png"
     }, {
-        "name": "Danni",
+        "name": "Danniel e Ruan",
         "points": 27,
         "avatar": "./assets/{theme}/images/ranking4.png"
     }],
