@@ -9,7 +9,7 @@
             "header": "0 - Mensagem",
             "text": "Estudo diz que homens possuem mais facilidade na área de exatas do que mulheres",
             "next": "Continuar",
-            "img": ""
+            "img": "https://sovis.com.br/wp-content/uploads/2019/11/homem-trabalhando-computador-tecnologia-1024x683.jpg"
         },
         "avatarSelection": {
             "header": "1 - Personalize",
@@ -33,19 +33,19 @@
     },
 
     "ranking": [{
-        "name": "Alan",
+        "name": "Alan e Marcos",
         "points": 79,
         "avatar": "./assets/{theme}/images/ranking1.png"
     }, {
-        "name": "Valentine",
+        "name": "Valentin e João",
         "points": 75,
         "avatar": "./assets/{theme}/images/ranking2.png"
     }, {
-        "name": "Francis",
+        "name": "Francis e Roberto",
         "points": 63,
         "avatar": "./assets/{theme}/images/ranking3.png"
     }, {
-        "name": "Danni",
+        "name": "Daniel e Vitor",
         "points": 27,
         "avatar": "./assets/{theme}/images/ranking4.png"
     }],
