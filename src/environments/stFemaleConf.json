@@ -2,9 +2,9 @@
     "localization": {
         "stMessage": {
             "header": "0 - Mensagem",
-            "text": "Estudo diz que mulheres são melhores que homens no setor de tecnologia",
+            "text": "De acordo com Digitalization and the American Workforce Estudo diz que mulheres são melhores que homens no setor de tecnologia",
             "next": "Continuar",
-            "img": "https://tm.ibxk.com.br/2017/11/18/18125018652000.jpg"
+            "img": "https://www.brookings.edu/wp-content/uploads/2017/11/mpp_2017_nov15_digitalization_occupations.png"
         },
         "avatarSelection": {
             "header": "1 - Personalize",
@@ -28,19 +28,19 @@
     },
 
  "ranking": [{
-        "name": "Joana e Karol",
+        "name": "Joana+Amy",
         "points": 79,
         "avatar": "./assets/{theme}/images/ranking1.png"
     }, {
-        "name": "Ingrid e Juliana",
+        "name": "Ema+Eva",
         "points": 75,
         "avatar": "./assets/{theme}/images/ranking2.png"
     }, {
-        "name": "Marcela e Carla",
+        "name": "Isa+Liz",
         "points": 63,
         "avatar": "./assets/{theme}/images/ranking3.png"
     }, {
-        "name": "Danniela e Mariana",
+        "name": "Lia+Bia",
         "points": 27,
         "avatar": "./assets/{theme}/images/ranking4.png"
     }],
