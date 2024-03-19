@@ -7,9 +7,9 @@
         "myTrophies": "Meus troféus",
         "stMessage": {
             "header": "0 - Mensagem",
-            "text": "Estudo diz que mulheres possuem mais facilidade na área de exatas do que homens",
+            "text": "De acordo com Digitalization and the American Workforce Estudo diz que mulheres são melhores que homens no setor de tecnologia",
             "next": "Continuar",
-            "img": "https://tm.ibxk.com.br/2017/11/18/18125018652000.jpg"
+            "img": "https://www.brookings.edu/wp-content/uploads/2017/11/mpp_2017_nov15_digitalization_occupations.png"
         },
         "avatarSelection": {
             "header": "1 - Personalize",
@@ -33,19 +33,19 @@
     },
 
     "ranking": [{
-        "name": "Vanessa e Joana",
+        "name": "Van+Bia",
         "points": 79,
         "avatar": "./assets/{theme}/images/ranking1.png"
     }, {
-        "name": "Valentina e Raissa",
+        "name": "Ema+Maria",
         "points": 75,
         "avatar": "./assets/{theme}/images/ranking2.png"
     }, {
-        "name": "Ingridy e Marcela",
+        "name": "Mel+Amy",
         "points": 63,
         "avatar": "./assets/{theme}/images/ranking3.png"
     }, {
-        "name": "Daniela e Mariana",
+        "name": "Eva+Ada",
         "points": 27,
         "avatar": "./assets/{theme}/images/ranking4.png"
     }],
