@@ -33,19 +33,19 @@
     },
 
     "ranking": [{
-        "name": "Alan e Marcos",
+        "name": "Alan+Noah",
         "points": 79,
         "avatar": "./assets/{theme}/images/ranking1.png"
     }, {
-        "name": "Valentin e João",
+        "name": "Val+João",
         "points": 75,
         "avatar": "./assets/{theme}/images/ranking2.png"
     }, {
-        "name": "Francis e Roberto",
+        "name": "Tom+Rob",
         "points": 63,
         "avatar": "./assets/{theme}/images/ranking3.png"
     }, {
-        "name": "Daniel e Vitor",
+        "name": "Ben+Ian",
         "points": 27,
         "avatar": "./assets/{theme}/images/ranking4.png"
     }],
