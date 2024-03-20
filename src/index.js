@@ -17,7 +17,9 @@ import { createSession, validateSession } from "./sessionManager";
     function renderWebpage() {
         ReactDOM.render(
             <React.StrictMode>
-                <App />
+		        <BrowserRouter basename={basename} forceRefresh={true} >
+                    <App />
+                </BrowserRouter>
             </React.StrictMode>,
             document.getElementById('root')
         );
